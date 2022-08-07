@@ -1,0 +1,17 @@
+{
+  "name": "selfservice_to_ical",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": "https://github.com/Wormav/Selfservice_to_ical.git",
+  "author": "jeremy lorette <jeremy.lorette@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ical-generator": "^3.5.1",
+    "puppeteer": "^16.1.0",
+    "puppeteer-extra": "^3.3.4",
+    "puppeteer-extra-plugin-stealth": "^2.11.0"
+  }
+}
