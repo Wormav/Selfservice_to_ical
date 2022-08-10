@@ -75,7 +75,7 @@ module.exports.scrape = async function scrape() {
 
   // ------------- Appui sur le premier service ------------- //
 
-  await page.click(".AgendaDate:nth-child(2) .ShowLoadingOnClick");
+  await page.click(".AgendaDate:nth-child(1) .ShowLoadingOnClick");
 
   await page.waitForSelector(".ApplicationContent");
 
@@ -85,7 +85,7 @@ module.exports.scrape = async function scrape() {
 
   console.log("Scrap en cour!");
 
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < 15; i++) {
     const dayType = await dayTypeEvaluate(page);
     const dispo = await evaluateIfDispo(page);
     let service;

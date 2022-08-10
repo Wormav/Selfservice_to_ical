@@ -28,14 +28,20 @@ module.exports.createEvents = async function createEvents(arrayServices) {
       url: "https://selfservice.stcl.fr/SelfService/",
     });
   }
+  // crée un serveur en local
+  async function serveur() {
+    http
+      .createServer((req, res) => calendar.serve(res))
+      .listen(4000, "127.0.0.1", () => {
+        console.log("Server running at http://127.0.0.1:4000/");
+      });
+      
+  };
+  await serveur()
 };
 
-// crée un serveur en local
 
-module.exports.serveur = async function serveur(calendar) {
-  http
-    .createServer((req, res) => calendar.serve(res))
-    .listen(4000, "127.0.0.1", () => {
-      console.log("Server running at http://127.0.0.1:4000/");
-    });
-};
+
+
+
+
