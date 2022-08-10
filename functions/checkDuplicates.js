@@ -1,4 +1,4 @@
-const ServiceDb = [
+const serviceDb = [
   {
     
     date: "mar. 9 août 2022",
@@ -88,10 +88,16 @@ const serviceScrap = [
   
 ];
 
-const tableReuni = [...ServiceDb, ...serviceScrap];
+// fonction qui prend deux tableaux , les reuni , et supprime les doublons
 
+function removeDuplicates(array1 , array2){
+  const arrayUnited = [...array1 , ...array2];
 
-const tableReuniSansDoublons = Array.from(new Set(tableReuni.map(JSON.stringify))).map(JSON.parse)
+  const array = Array.from(new Set(arrayUnited.map(JSON.stringify))).map(JSON.parse)
 
+  return array
+}
 
-console.table(tableReuniSansDoublons)
+console.table(removeDuplicates(serviceDb, serviceScrap))
+
+module.exports = {removeDuplicates}
