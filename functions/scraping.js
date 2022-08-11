@@ -85,7 +85,7 @@ module.exports.scrape = async function scrape() {
 
   console.log("Scrap en cour!");
 
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < 18; i++) {
     const dayType = await dayTypeEvaluate(page);
     const dispo = await evaluateIfDispo(page);
     let service;
