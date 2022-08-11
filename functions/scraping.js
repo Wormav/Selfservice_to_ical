@@ -70,7 +70,6 @@ module.exports.scrape = async function scrape() {
 
   await page.click("#LoginButton");
   console.log("connexion ok!");
-
   await page.waitForSelector(".ShowLoadingOnClick:first-child");
 
   // ------------- Appui sur le premier service ------------- //
@@ -81,11 +80,13 @@ module.exports.scrape = async function scrape() {
 
   // // ------------- Scrappe le service puis boucle sur le nombre i de services et l'ajoute à un tableau ------------- //
 
-  const arrayServices = [];
+  const  arrayServices = [];
 
   console.log("Scrap en cour!");
 
-  for (i = 0; i < 18; i++) {
+  await page.waitForTimeout('5000')
+
+  for (i = 0; i < 15; i++) {
     const dayType = await dayTypeEvaluate(page);
     const dispo = await evaluateIfDispo(page);
     let service;
@@ -164,11 +165,12 @@ module.exports.scrape = async function scrape() {
 
     // ------------->  Page suivante  <------------- //
 
-
     await nextService(page);
 
     console.log(i);
   }
+
+  console.table(arrayServices);
 
   await browser.close();
 
