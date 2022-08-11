@@ -8,7 +8,7 @@ async function getPlanning() {
 
   let arrayServices = await scrape();
 
-  console.table(arrayServices);
+  console.log(arrayServices);
 
   // recupere la data du fichier déja présent et la convertie en objet js
 

@@ -41,6 +41,8 @@ const puppeteer = require("puppeteer-extra");
 const ical = require("ical-generator");
 const http = require("http");
 
+const { checkDateOk } = require('./scraping/checkDateOk')
+
 module.exports.scrape = async function scrape() {
   // plugin qui permet de ne pas être détecté
 
@@ -174,5 +176,5 @@ module.exports.scrape = async function scrape() {
 
   await browser.close();
 
-  return arrayServices;
+  return checkDateOk(arrayServices);
 };
