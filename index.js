@@ -12,7 +12,7 @@ async function getPlanning() {
 
   // recupere la data du fichier déja présent et la convertie en objet js
 
-  const data =  JSON.parse(fs.readFileSync("./data.json", "utf-8"))
+  const data =  JSON.parse(fs.readFileSync("./data/data.json", "utf-8"))
 
   // supprime les doublons entre le scrape et la data
 
@@ -23,7 +23,7 @@ async function getPlanning() {
   fs.writeFileSync("./data.json", JSON.stringify(arrayForAddData))
 
   // Crée les évenelents apple et crée un serveur puis renvoie l'addresse dans la console
-  await createEvents(JSON.parse(fs.readFileSync("./data.json", "utf-8")));
+  await createEvents(JSON.parse(fs.readFileSync("./data/data.json", "utf-8")));
 }
 
 getPlanning();
