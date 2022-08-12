@@ -3,6 +3,13 @@ const fs = require("fs");
 const { removeDuplicates } = require("./functions/checkDuplicates");
 const { scrape } = require("./functions/scraping");
 
+const express = require('express');
+
+const app = express();
+
+
+
+
 async function getPlanning() {
   // scrape et crée un tableau
 
@@ -23,7 +30,14 @@ async function getPlanning() {
   fs.writeFileSync("./data/data.json", JSON.stringify(arrayForAddData));
 
   // Crée les évenelents apple et crée un serveur puis renvoie l'addresse dans la console
-  await createEvents(JSON.parse(fs.readFileSync("./data/data.json", "utf-8")));
+  const calendar = await createEvents(JSON.parse(fs.readFileSync("./data/data.json", "utf-8")));
+  return calendar
 }
 
-getPlanning();
+app.get('/calendar', async (req, res) => {
+        console.log("COUCOU LE SERVEUR A RECU TON APPEL BRO")
+	const calendar = await getPlanning();
+	calendar.serve(res)
+});
+
+app.listen(3000);

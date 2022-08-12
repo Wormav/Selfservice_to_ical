@@ -9,6 +9,7 @@
   "author": "jeremy lorette <jeremy.lorette@outlook.com>",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.18.1",
     "ical-generator": "^3.5.1",
     "puppeteer": "^16.1.0",
     "puppeteer-extra": "^3.3.4",
