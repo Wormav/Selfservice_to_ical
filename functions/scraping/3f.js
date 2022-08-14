@@ -13,6 +13,19 @@ async function evaluateif3f4lignes(page) {
   }
 }
 
+async function evaluateif3f4lignesAndDeplacement(page) {
+  try {
+    const dayType = await page.evaluate(() => {
+      const type = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[2]
+        .innerText;
+      return type;
+    });
+    return dayType;
+  } catch (e) {
+    return "no 3f 4 lignes";
+  }
+}
+
 // ------------->  scrap 3F  <------------- //
 
 // 3F 4 lignes
@@ -154,7 +167,7 @@ async function getService3fIf4lignesService4(page) {
         ".DutyActivity_EndTime_Cell_Value"
       )[6].innerText;
 
-      const endPlaceIdentifier = 'DEP' // pour résoudre bug etrange (marche car fini forcément au dépot)
+      const endPlaceIdentifier = "DEP"; // pour résoudre bug etrange (marche car fini forcément au dépot)
 
       const start = document.querySelectorAll(
         ".DutyActivity_StartTime_Cell_Value"
@@ -269,20 +282,19 @@ async function getService3fService3(page) {
       const date = document.querySelector(
         ".DateNavigationBarDateLabel"
       ).innerText;
-      
+
       const end = document.querySelectorAll(
         ".DutyActivity_EndTime_Cell_Value"
       )[4].innerText;
-      
+
       const endPlaceIdentifier = document.querySelectorAll(
         ".DutyActivity_EndPlaceIdentifier_Cell_Value"
       )[4].innerText;
-      
-      
+
       const startPlaceIdentifier = document.querySelectorAll(
         ".DutyActivity_StartPlaceIdentifier_Cell_Value"
       )[4].innerText;
-      
+
       const start = document.querySelectorAll(
         ".DutyActivity_StartTime_Cell_Value"
       )[4].innerText;
@@ -296,7 +308,6 @@ async function getService3fService3(page) {
         startPlaceIdentifier,
         endPlaceIdentifier,
         sb,
-        
       };
     });
     return result;
@@ -305,13 +316,100 @@ async function getService3fService3(page) {
   }
 }
 
+async function getService3fif4lignesAndDeplacmentService2(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+
+      const end = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[4].innerText;
+
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[4].innerText;
+
+      const startPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[3].innerText;
+
+      const start = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[3].innerText;
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[3]
+        .innerText;
+
+      const message = "3f avec 4 lignes avec deplacement";
+
+      return {
+        date,
+        start,
+        end,
+        startPlaceIdentifier,
+        endPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result;
+  } catch (e) {
+    return "bug 3F Service 2 avec deplacement";
+  }
+}
+
+async function getService3fif4lignesAndDeplacmentService3(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+
+      const startPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[6].innerText;
+
+      const start = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[6].innerText;
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[6]
+        .innerText;
+      const end = document.querySelectorAll(
+        ".DutyActivity_EndTime_Cell_Value"
+      )[6].innerText;
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_EndPlaceIdentifier_Cell_Value"
+      )[6].innerText;
+
+      const message = "3f avec 4 lignes avec deplacement";
+
+      return {
+        date,
+        start,
+        end,
+        startPlaceIdentifier,
+        endPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result;
+  } catch (e) {
+    return "bug 3F Service 3 avec deplacement";
+  }
+}
+
 module.exports = {
   getService3fService1,
   getService3fService2,
   getService3fService3,
   evaluateif3f4lignes,
+  evaluateif3f4lignesAndDeplacement,
   getService3fIf4lignesService1,
   getService3fIf4lignesService2,
   getService3fIf4lignesService3,
   getService3fIf4lignesService4,
+  getService3fif4lignesAndDeplacmentService2,
+  getService3fif4lignesAndDeplacmentService3,
 };

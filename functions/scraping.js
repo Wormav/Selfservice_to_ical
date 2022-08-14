@@ -29,10 +29,13 @@ const {
   getService3fService2,
   getService3fService3,
   evaluateif3f4lignes,
+  evaluateif3f4lignesAndDeplacement,
   getService3fIf4lignesService1,
   getService3fIf4lignesService2,
   getService3fIf4lignesService3,
   getService3fIf4lignesService4,
+  getService3fif4lignesAndDeplacmentService2,
+  getService3fif4lignesAndDeplacmentService3,
 } = require("./scraping/3f");
 
 const { evaluateIfDispo, getServiceDispo } = require("./scraping/dispo");
@@ -41,7 +44,7 @@ const puppeteer = require("puppeteer-extra");
 const ical = require("ical-generator");
 const http = require("http");
 
-const { checkDateOk } = require('./scraping/checkDateOk')
+const { checkDateOk } = require("./scraping/checkDateOk");
 
 module.exports.scrape = async function scrape() {
   // plugin qui permet de ne pas être détecté
@@ -82,11 +85,11 @@ module.exports.scrape = async function scrape() {
 
   // // ------------- Scrappe le service puis boucle sur le nombre i de services et l'ajoute à un tableau ------------- //
 
-  const  arrayServices = [];
+  const arrayServices = [];
 
   console.log("Scrap en cour!");
 
-  await page.waitForTimeout('5000')
+  await page.waitForTimeout("5000");
 
   for (i = 0; i < 30; i++) {
     const dayType = await dayTypeEvaluate(page);
@@ -143,8 +146,21 @@ module.exports.scrape = async function scrape() {
       // ------------->  SI 3F  <------------- //
     } else if (dayType === "3F") {
       const if4lignes = await evaluateif3f4lignes(page);
+      const if4lignesAndDeplacement = await evaluateif3f4lignesAndDeplacement(
+        page
+      );
+
+      // si 4 lignes et deplacement
+      if (
+        if4lignes === "Coupure" &&
+        if4lignesAndDeplacement === "Déplacement de"
+      ) {
+        service = await getService3fIf4lignesService1(page);
+        service2 = await getService3fif4lignesAndDeplacmentService2(page);
+        service3 = await getService3fif4lignesAndDeplacmentService3(page);
+      }
       // si 4 lignes
-      if (if4lignes === "Coupure") {
+      else if (if4lignes === "Coupure") {
         service = await getService3fIf4lignesService1(page);
         service2 = await getService3fIf4lignesService2(page);
         service3 = await getService3fIf4lignesService3(page);
