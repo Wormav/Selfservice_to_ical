@@ -4,10 +4,7 @@ const { removeDuplicates } = require("./functions/checkDuplicates");
 const { scrape } = require("./functions/scraping");
 const { getTimeScrap } = require("./functions/scraping/getTimeScrap");
 const { formatDate } = require("./functions/tools/formatDate");
-const {
-  dateLastScrap,
-  timeLimitForScrap,
-} = require("./functions/tools/datesSettings");
+
 
 const express = require("express");
 
@@ -23,7 +20,7 @@ async function getPlanning() {
 
   // envoie la date et l'heure du dernier scrap dans la data
 
-  getTimeScrap("./data/LastScrapTime.json");
+  getTimeScrap("./data/lastScrapTime.json");
 
   // recupere la data du fichier déja présent et la convertie en objet js
 
@@ -53,8 +50,10 @@ async function getCalendarData() {
 }
 
 app.get("/calendar", async (req, res) => {
-  console.log("LE SERVEUR A RECU UN APPEL");
+  let dateLastScrap = require("./data/lastScrapTime.json").date;
 
+   const timeLimitForScrap = 1;
+  console.log("LE SERVEUR A RECU UN APPEL");
   // regarde si la date actuel est suppérieur a la date du dernier scrap + 12h
 
   if (Date.now() > dateLastScrap + timeLimitForScrap) {
