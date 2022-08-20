@@ -3,13 +3,7 @@ const { formatDate } = require("../tools/formatDate");
 const fs = require("fs");
 
 function getTimeScrap(path) {
-  fs.writeFileSync(
-    path,
-    JSON.stringify({
-      date: Date.now(),
-      dateScrap: formatDate(new Date()),
-    })
-  );
+  fs.writeFileSync(path, JSON.stringify({ date: Date.now() }));
 }
 
 module.exports = { getTimeScrap };

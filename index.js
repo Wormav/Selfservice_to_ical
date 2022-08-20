@@ -49,7 +49,11 @@ async function getCalendarData() {
 }
 
 app.get("/calendar", async (req, res) => {
-  let dateLastScrap = require("./data/lastScrapTime.json").date;
+  let dateLastScrap = JSON.parse(
+    fs.readFileSync("./data/lastScrapTime.json", "utf-8")
+  ).date;
+
+  console.log(dateLastScrap);
 
   const timeLimitForScrap = 43200000;
   console.log("LE SERVEUR A RECU UN APPEL");
