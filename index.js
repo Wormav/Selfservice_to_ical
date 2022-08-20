@@ -3,7 +3,7 @@ const fs = require("fs");
 const { removeDuplicates } = require("./functions/checkDuplicates");
 const { scrape } = require("./functions/scraping");
 const { getTimeScrap } = require("./functions/scraping/getTimeScrap");
-const { formatDate } = require("./functions/tools/formatDate");
+const { changeService } = require("./functions/changeService");
 
 const express = require("express");
 
@@ -23,7 +23,11 @@ async function getPlanning() {
 
   // recupere la data du fichier déja présent et la convertie en objet js
 
-  const data = JSON.parse(fs.readFileSync("./data/data.json", "utf-8"));
+  const dataBase = JSON.parse(fs.readFileSync("./data/data.json", "utf-8"));
+
+  // suprime les date qui sont déja dans la data mais qui sont scrapé
+
+  const data = changeService(arrayServices, dataBase);
 
   // supprime les doublons entre le scrape et la data
 
@@ -52,8 +56,6 @@ app.get("/calendar", async (req, res) => {
   let dateLastScrap = JSON.parse(
     fs.readFileSync("./data/lastScrapTime.json", "utf-8")
   ).date;
-
-  console.log(dateLastScrap);
 
   const timeLimitForScrap = 43200000;
   console.log("LE SERVEUR A RECU UN APPEL");
