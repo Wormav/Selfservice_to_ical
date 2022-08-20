@@ -5,7 +5,6 @@ const { scrape } = require("./functions/scraping");
 const { getTimeScrap } = require("./functions/scraping/getTimeScrap");
 const { formatDate } = require("./functions/tools/formatDate");
 
-
 const express = require("express");
 
 const app = express();
@@ -52,7 +51,7 @@ async function getCalendarData() {
 app.get("/calendar", async (req, res) => {
   let dateLastScrap = require("./data/lastScrapTime.json").date;
 
-   const timeLimitForScrap = 43200000;
+  const timeLimitForScrap = 43200000;
   console.log("LE SERVEUR A RECU UN APPEL");
   // regarde si la date actuel est suppérieur a la date du dernier scrap + 12h
 
