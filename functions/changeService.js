@@ -111,8 +111,6 @@ const array2 = [
   },
 ];
 
-console.log(checkIfServiceChangeAncientService(array2, data2));
-
 module.exports = {
   changeService,
   saveChangeServices,
