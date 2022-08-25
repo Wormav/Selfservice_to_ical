@@ -3,7 +3,11 @@ const fs = require("fs");
 const { removeDuplicates } = require("./functions/checkDuplicates");
 const { scrape } = require("./functions/scraping");
 const { getTimeScrap } = require("./functions/scraping/getTimeScrap");
-const { changeService } = require("./functions/changeService");
+const {
+  changeService,
+  saveChangeServices,
+  checkIfServiceChangeAncientService,
+} = require("./functions/changeService");
 
 const express = require("express");
 
@@ -29,9 +33,20 @@ async function getPlanning() {
 
   const data = changeService(arrayServices, dataBase);
 
+  // récupére tout les services supprimés par changeService()
+
+  const servicesDeleteData = saveChangeServices(arrayServices, dataBase);
+
   // supprime les doublons entre le scrape et la data
 
   const arrayForAddData = removeDuplicates(arrayServices, data);
+
+  // trouve les ancient service qui on était modifiés
+
+  const changeAncientService = checkIfServiceChangeAncientService(
+    servicesDeleteData,
+    arrayForAddData
+  );
 
   // ecrit dans la data le nouveaux tableaux sans les doublons
 
