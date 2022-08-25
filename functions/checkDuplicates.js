@@ -1,4 +1,4 @@
-// fonction qui prend deux tableaux , les reuni , et supprime les doublons
+// function that takes two arrays, joins them, and removes duplicates
 
 function removeDuplicates(array1, array2) {
   const arrayUnited = [...array1, ...array2];

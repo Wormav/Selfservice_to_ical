@@ -1,18 +1,17 @@
 const ical = require("ical-generator");
 const { monthInEn } = require("./tools/monthInEn");
-const {getVtimezoneComponent} = require('@touch4it/ical-timezones');
+const { getVtimezoneComponent } = require("@touch4it/ical-timezones");
 const http = require("http");
 
-
-// boucle qui crée les event
+// loop that creates the events
 
 module.exports.createEvents = async function createEvents(arrayServices) {
   const calendar = ical({ name: "Boulot" });
 
   calendar.timezone({
-    name: 'FOO',
-    generator: getVtimezoneComponent
-});
+    name: "FOO",
+    generator: getVtimezoneComponent,
+  });
 
   for (i = 0; i < arrayServices.length; i++) {
     calendar.createEvent({
@@ -33,14 +32,8 @@ module.exports.createEvents = async function createEvents(arrayServices) {
         " => " +
         arrayServices[i].endPlaceIdentifier,
       url: "https://selfservice.stcl.fr/SelfService/",
-      timezone: 'Europe/Paris'
+      timezone: "Europe/Paris",
     });
   }
-	return calendar
-}
-
-
-
-
-
-
+  return calendar;
+};

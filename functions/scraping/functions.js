@@ -1,6 +1,4 @@
-
-
-// ------------->  REGARDE ET RETOURNE TYPE DE JOURNEE <------------- //
+// -------------> LOOK AND RETURN TYPE OF DAY <------------- //
 
 async function dayTypeEvaluate(page) {
   await page.waitForSelector(".WorkdayDetailAccordions");
@@ -29,11 +27,8 @@ async function previousService(page) {
   await page.click(".DateNavigationBarPreviousDate");
 }
 
-
-// ------------->  crée un serveur en local  <------------- //
-
-
-
 module.exports = {
-  dayTypeEvaluate, nextService , previousService  
+  dayTypeEvaluate,
+  nextService,
+  previousService,
 };
