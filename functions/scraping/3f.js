@@ -26,6 +26,19 @@ async function evaluateif3f4lignesAndDeplacement(page) {
   }
 }
 
+async function evaluateif3CoupureEtNavettePerso(page) {
+  try {
+    const dayType = await page.evaluate(() => {
+      const type = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[6]
+        .innerText;
+      return type;
+    });
+    return dayType;
+  } catch (e) {
+    return "no 3f coupure et navette perso";
+  }
+}
+
 // ------------->  scrap 3F  <------------- //
 
 // 3F 4 lignes
@@ -400,16 +413,190 @@ async function getService3fif4lignesAndDeplacmentService3(page) {
   }
 }
 
+// 3F avec coupure pause et navette du perso
+
+async function getService3fIfCoupureEtNavettePersoService1(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+      const start = document.querySelector(
+        ".DutyActivity_StartTime_Cell_Value"
+      ).innerText;
+
+      const startPlaceIdentifier = document.querySelector(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      ).innerText;
+
+      const sb = document.querySelector(
+        ".DutyActivity_Name_Cell_Value"
+      ).innerText;
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[1].innerText;
+
+      const end = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[1].innerText;
+
+      const message = "3f avec navette du perso et coupure";
+
+      return {
+        date,
+        start,
+        end,
+        startPlaceIdentifier,
+        endPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result;
+  } catch (e) {
+    return "bug 3F service 1";
+  }
+}
+
+async function getService3fIfCoupureEtNavettePersoService2(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+      const start = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[2].innerText;
+
+      const startPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[2].innerText;
+
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[2]
+        .innerText;
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[3].innerText;
+
+      const end = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[3].innerText;
+
+      const message = "3f avec navette du perso et coupure";
+
+      return {
+        date,
+        start,
+        end,
+        startPlaceIdentifier,
+        endPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result;
+  } catch (e) {
+    return "bug 3F service 1";
+  }
+}
+
+async function getService3fIfCoupureEtNavettePersoService3(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+      const start = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[4].innerText;
+
+      const startPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[4].innerText;
+
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[4]
+        .innerText;
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[5].innerText;
+
+      const end = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[5].innerText;
+
+      const message = "3f avec navette du perso et coupure";
+
+      return {
+        date,
+        start,
+        end,
+        startPlaceIdentifier,
+        endPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result;
+  } catch (e) {
+    return "bug 3F service 1";
+  }
+}
+
+async function getService3fIfCoupureEtNavettePersoService4(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+      const start = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[6].innerText;
+
+      const startPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[6].innerText;
+
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[6]
+        .innerText;
+      const endPlaceIdentifier = "DEP"; // pour résoudre bug etrange (marche car fini forcément au dépot)
+
+      const end = document.querySelectorAll(
+        ".DutyActivity_EndTime_Cell_Value"
+      )[6].innerText;
+
+      const message = "3f avec navette du perso et coupure";
+
+      return {
+        date,
+        start,
+        end,
+        startPlaceIdentifier,
+        endPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result;
+  } catch (e) {
+    return "bug 3F service 1";
+  }
+}
+
 module.exports = {
   getService3fService1,
   getService3fService2,
   getService3fService3,
   evaluateif3f4lignes,
   evaluateif3f4lignesAndDeplacement,
+  evaluateif3CoupureEtNavettePerso,
   getService3fIf4lignesService1,
   getService3fIf4lignesService2,
   getService3fIf4lignesService3,
   getService3fIf4lignesService4,
   getService3fif4lignesAndDeplacmentService2,
   getService3fif4lignesAndDeplacmentService3,
+  getService3fIfCoupureEtNavettePersoService1,
+  getService3fIfCoupureEtNavettePersoService2,
+  getService3fIfCoupureEtNavettePersoService3,
+  getService3fIfCoupureEtNavettePersoService4,
 };

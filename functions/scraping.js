@@ -30,12 +30,17 @@ const {
   getService3fService3,
   evaluateif3f4lignes,
   evaluateif3f4lignesAndDeplacement,
+  evaluateif3CoupureEtNavettePerso,
   getService3fIf4lignesService1,
   getService3fIf4lignesService2,
   getService3fIf4lignesService3,
   getService3fIf4lignesService4,
   getService3fif4lignesAndDeplacmentService2,
   getService3fif4lignesAndDeplacmentService3,
+  getService3fIfCoupureEtNavettePersoService1,
+  getService3fIfCoupureEtNavettePersoService2,
+  getService3fIfCoupureEtNavettePersoService3,
+  getService3fIfCoupureEtNavettePersoService4,
 } = require("./scraping/3f");
 
 const { evaluateIfDispo, getServiceDispo } = require("./scraping/dispo");
@@ -147,6 +152,9 @@ module.exports.scrape = async function scrape() {
       const if4lignesAndDeplacement = await evaluateif3f4lignesAndDeplacement(
         page
       );
+      const ifCoupureEtNavettePerso = await evaluateif3CoupureEtNavettePerso(
+        page
+      );
 
       // if 4 lignes et deplacement
       if (
@@ -163,6 +171,14 @@ module.exports.scrape = async function scrape() {
         service2 = await getService3fIf4lignesService2(page);
         service3 = await getService3fIf4lignesService3(page);
         service4 = await getService3fIf4lignesService4(page);
+
+        arrayServices.push(service4);
+      } // if 3F avec coupure et navette du perso
+      else if (ifCoupureEtNavettePerso === "Navette du Personnel") {
+        service = await getService3fIfCoupureEtNavettePersoService1(page);
+        service2 = await getService3fIfCoupureEtNavettePersoService2(page);
+        service3 = await getService3fIfCoupureEtNavettePersoService3(page);
+        service4 = await getService3fIfCoupureEtNavettePersoService4(page);
 
         arrayServices.push(service4);
       } // if non 3F normal
