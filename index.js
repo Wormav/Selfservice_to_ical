@@ -5,12 +5,14 @@ const { scrape } = require("./functions/scraping");
 const { getTimeScrap } = require("./functions/scraping/getTimeScrap");
 const { changeService } = require("./functions/changeService");
 const express = require("express");
+const { request } = require("http");
+const { Console } = require("console");
 
 const app = express();
 
 //function to return the schedule from the results of the scrap
-async function getPlanning() {
-  let arrayServices = await scrape();
+async function getPlanning(id, password) {
+  let arrayServices = await scrape(id, password);
 
   getTimeScrap("./data/lastScrapTime.json");
 
@@ -36,7 +38,7 @@ async function getCalendarData() {
   return calendar;
 }
 
-app.get("/calendar", async (req, res) => {
+app.get("/calendar/:id/:password", async (req, res) => {
   let dateLastScrap = JSON.parse(
     fs.readFileSync("./data/lastScrapTime.json", "utf-8")
   ).date;
@@ -44,8 +46,11 @@ app.get("/calendar", async (req, res) => {
   const timeLimitForScrap = 43200000;
   console.log("THE SERVER RECEIVED A CALL");
 
+  id = req.params.id;
+  password = req.params.password;
+
   if (Date.now() > dateLastScrap + timeLimitForScrap) {
-    const calendar = await getPlanning();
+    const calendar = await getPlanning(id, password);
     calendar.serve(res);
     console.log("scrap");
   } else {

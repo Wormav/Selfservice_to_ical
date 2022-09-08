@@ -49,7 +49,7 @@ const puppeteer = require("puppeteer-extra");
 
 const { checkDateOk } = require("./scraping/checkDateOk");
 
-module.exports.scrape = async function scrape() {
+module.exports.scrape = async function scrape(id, password) {
   //plugin that allows not to be detected
 
   const StealthPlugin = require("puppeteer-extra-plugin-stealth");
@@ -67,12 +67,12 @@ module.exports.scrape = async function scrape() {
   //------------- Username ------------- //
 
   const searchInputUsername = await page.$("#Username");
-  await searchInputUsername.type("31146");
+  await searchInputUsername.type(id);
 
   // // ------------- Password-------------- //
 
   const searchInputUserPassword = await page.$("#Password");
-  await searchInputUserPassword.type("6294");
+  await searchInputUserPassword.type(password);
 
   // // ------------- btn ------------- //
 
