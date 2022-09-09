@@ -14,33 +14,40 @@ const app = express();
 async function getPlanning(id, password) {
   let arrayServices = await scrape(id, password);
 
-  getTimeScrap("./data/lastScrapTime.json");
+  getTimeScrap("./data/" + id + "lastScrapTime.json");
 
-  const dataBase = JSON.parse(fs.readFileSync("./data/data.json", "utf-8"));
+  const dataBase = JSON.parse(
+    fs.readFileSync("./data/" + id + "data.json", "utf-8")
+  );
 
   const data = changeService(arrayServices, dataBase);
 
   const arrayForAddData = removeDuplicates(arrayServices, data);
 
-  fs.writeFileSync("./data/data.json", JSON.stringify(arrayForAddData));
+  fs.writeFileSync(
+    "./data/" + id + "data.json",
+    JSON.stringify(arrayForAddData)
+  );
 
   const calendar = await createEvents(
-    JSON.parse(fs.readFileSync("./data/data.json", "utf-8"))
+    JSON.parse(fs.readFileSync("./data/" + id + "data.json", "utf-8"))
   );
 
   return calendar;
 }
 
 //function to return the schedule from the data
-async function getCalendarData() {
-  const data = JSON.parse(fs.readFileSync("./data/data.json", "utf-8"));
+async function getCalendarData(id) {
+  const data = JSON.parse(
+    fs.readFileSync("./data/" + id + "data.json", "utf-8")
+  );
   const calendar = await createEvents(data);
   return calendar;
 }
 
 app.get("/calendar/:id/:password", async (req, res) => {
   let dateLastScrap = JSON.parse(
-    fs.readFileSync("./data/lastScrapTime.json", "utf-8")
+    fs.readFileSync("./data/" + id + "lastScrapTime.json", "utf-8")
   ).date;
 
   const timeLimitForScrap = 43200000;
@@ -52,11 +59,11 @@ app.get("/calendar/:id/:password", async (req, res) => {
   if (Date.now() > dateLastScrap + timeLimitForScrap) {
     const calendar = await getPlanning(id, password);
     calendar.serve(res);
-    console.log("scrap");
+    console.log("scrap " + "for: " + id);
   } else {
-    const calendar = await getCalendarData();
+    const calendar = await getCalendarData(id);
     calendar.serve(res);
-    console.log("not scrap");
+    console.log("not scrap " + "for: " + id);
   }
 });
 
