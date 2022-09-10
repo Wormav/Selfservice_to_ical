@@ -77,9 +77,8 @@ module.exports.scrape = async function scrape(id, password) {
   // // ------------- btn ------------- //
 
   await page.click("#LoginButton");
-  console.log("Connection ok!");
   await page.waitForSelector(".ShowLoadingOnClick:first-child");
-
+  console.log("Connection ok!");
   // ------------- first service ------------- //
 
   await page.click(".AgendaDate:nth-child(1) .ShowLoadingOnClick");
