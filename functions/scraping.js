@@ -21,10 +21,14 @@ const {
   getService2fService2,
   evaluateif2fDeplacementVers,
   evaluateif2fPriseDeService,
+  evaluateif2fPause,
   getService2fPriseDeServiceService1,
   getService2fPriseDeServiceService2,
   getService2fIfDeplacementVersService1,
   getService2fIfDeplacementVersService2,
+  getService2fIfPauseService1,
+  getService2fIfPauseService2,
+  getService2fIfPauseService3,
 } = require("./scraping/2f");
 
 const {
@@ -133,6 +137,7 @@ module.exports.scrape = async function scrape(id, password) {
     } else if (dayType === "2F") {
       const ifDeplacementVers = await evaluateif2fDeplacementVers(page);
       const ifPriseDeService = await evaluateif2fPriseDeService(page);
+      const ifPause = await evaluateif2fPause(page);
       // if 2F deplacement vers
       if (
         ifDeplacementVers === "Coupure" ||
@@ -143,6 +148,12 @@ module.exports.scrape = async function scrape(id, password) {
       } else if (ifPriseDeService === "Prise de service anticipée") {
         service = await getService2fPriseDeServiceService1(page);
         service2 = await getService2fPriseDeServiceService2(page);
+      } else if (ifPause === "Pause") {
+        service = await getService2fIfPauseService1(page);
+        service2 = await getService2fIfPauseService2(page);
+        service3 = await getService2fIfPauseService3(page);
+
+        arrayServices.push(service3);
       }
       // if 2F normal
       else {

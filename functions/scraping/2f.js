@@ -27,6 +27,19 @@ async function evaluateif2fPriseDeService(page) {
   }
 }
 
+async function evaluateif2fPause(page) {
+  try {
+    const dayType = await page.evaluate(() => {
+      const type = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[1]
+        .innerText;
+      return type;
+    });
+    return dayType;
+  } catch (e) {
+    return "no 2f Pause";
+  }
+}
+
 // ------------->  scrap 2F  <------------- //
 
 //2F Deplacement vers
@@ -79,19 +92,19 @@ async function getService2fIfDeplacementVersService2(page) {
       const date = document.querySelector(
         ".DateNavigationBarDateLabel"
       ).innerText;
-      
+
       const end = document.querySelectorAll(
         ".DutyActivity_EndTime_Cell_Value"
       )[3].innerText;
-      
+
       const endPlaceIdentifier = document.querySelectorAll(
         ".DutyActivity_EndPlaceIdentifier_Cell_Value"
       )[3].innerText;
-      
+
       const startPlaceIdentifier = document.querySelectorAll(
         ".DutyActivity_StartPlaceIdentifier_Cell_Value"
       )[3].innerText;
-      
+
       const start = document.querySelectorAll(
         ".DutyActivity_StartTime_Cell_Value"
       )[3].innerText;
@@ -131,8 +144,8 @@ async function getService2fPriseDeServiceService1(page) {
         ".DutyActivity_StartPlaceIdentifier_Cell_Value"
       ).innerText;
 
-      const sb = document.querySelectorAll(
-        ".DutyActivity_Name_Cell_Value")[2].innerText;
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[2]
+        .innerText;
 
       const end = document.querySelectorAll(
         ".DutyActivity_StartTime_Cell_Value"
@@ -140,7 +153,7 @@ async function getService2fPriseDeServiceService1(page) {
       const endPlaceIdentifier = document.querySelectorAll(
         ".DutyActivity_StartPlaceIdentifier_Cell_Value"
       )[3].innerText;
-      const message = '2f avec Prise de Service'
+      const message = "2f avec Prise de Service";
 
       return {
         date,
@@ -149,13 +162,13 @@ async function getService2fPriseDeServiceService1(page) {
         sb,
         end,
         endPlaceIdentifier,
-        message
+        message,
       };
     });
 
     return result;
   } catch (e) {
-    return "bug 2F 1er service" ;
+    return "bug 2F 1er service";
   }
 }
 
@@ -173,16 +186,16 @@ async function getService2fPriseDeServiceService2(page) {
         ".DutyActivity_StartPlaceIdentifier_Cell_Value"
       )[4].innerText;
 
-      const sb = document.querySelectorAll(
-        ".DutyActivity_Name_Cell_Value")[4].innerText;
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[4]
+        .innerText;
 
       const end = document.querySelectorAll(
         ".DutyActivity_EndTime_Cell_Value"
       )[4].innerText;
       const endPlaceIdentifier = document.querySelectorAll(
         ".DutyActivity_EndPlaceIdentifier_Cell_Value"
-      )[4].innerText
-      const message = '2f avec Prise de Service'
+      )[4].innerText;
+      const message = "2f avec Prise de Service";
 
       return {
         date,
@@ -191,16 +204,15 @@ async function getService2fPriseDeServiceService2(page) {
         sb,
         end,
         endPlaceIdentifier,
-        message
+        message,
       };
     });
 
     return result;
   } catch (e) {
-    return "bug 2F 1er service" ;
+    return "bug 2F 1er service";
   }
 }
-
 
 // 2F simple
 async function getService2fService1(page) {
@@ -240,7 +252,7 @@ async function getService2fService1(page) {
 
     return result;
   } catch (e) {
-    return "bug 2F 1er service" ;
+    return "bug 2F 1er service";
   }
 }
 
@@ -281,13 +293,143 @@ async function getService2fService2(page) {
   }
 }
 
+// 2F pause and 3 services
+
+async function getService2fIfPauseService1(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+      const start = document.querySelector(
+        ".DutyActivity_StartTime_Cell_Value"
+      ).innerText;
+
+      const startPlaceIdentifier = document.querySelector(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      ).innerText;
+
+      const sb = document.querySelector(
+        ".DutyActivity_Name_Cell_Value"
+      ).innerText;
+
+      const end = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[1].innerText;
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[1].innerText;
+
+      const message = "2F avec pause";
+
+      return {
+        date,
+        start,
+        startPlaceIdentifier,
+        sb,
+        end,
+        endPlaceIdentifier,
+        message,
+      };
+    });
+
+    return result;
+  } catch (e) {
+    return "bug 2F pause";
+  }
+}
+
+async function getService2fIfPauseService2(page) {
+  try {
+    const result2 = page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+      const start = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[2].innerText;
+      const end = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[3].innerText;
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[3].innerText;
+
+      const startPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[2].innerText;
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[2]
+        .innerText;
+
+      const message = "2F avec pause";
+
+      return {
+        date,
+        start,
+        end,
+        endPlaceIdentifier,
+        startPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result2;
+  } catch (e) {
+    return "bug 2F pause";
+  }
+}
+
+async function getService2fIfPauseService3(page) {
+  try {
+    const result2 = page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+      const start = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[4].innerText;
+      const end = document.querySelectorAll(
+        ".DutyActivity_EndTime_Cell_Value"
+      )[4].innerText;
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[3].innerText;
+
+      const startPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_EndPlaceIdentifier_Cell_Value"
+      )[4].innerText;
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[4]
+        .innerText;
+
+      const message = "2F avec pause";
+
+      return {
+        date,
+        start,
+        end,
+        endPlaceIdentifier,
+        startPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result2;
+  } catch (e) {
+    return "bug 2F pause";
+  }
+}
+
 module.exports = {
   getService2fService1,
   getService2fService2,
   evaluateif2fDeplacementVers,
   evaluateif2fPriseDeService,
+  evaluateif2fPause,
   getService2fPriseDeServiceService1,
   getService2fPriseDeServiceService2,
   getService2fIfDeplacementVersService1,
   getService2fIfDeplacementVersService2,
+  getService2fIfPauseService1,
+  getService2fIfPauseService2,
+  getService2fIfPauseService3,
 };
