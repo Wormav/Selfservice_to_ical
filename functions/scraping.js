@@ -1,3 +1,6 @@
+const fs = require("fs");
+const path = require("node:path");
+
 const {
   nextService,
   dayTypeEvaluate,
@@ -43,11 +46,14 @@ const {
   getService3fIfCoupureEtNavettePersoService4,
 } = require("./scraping/3f");
 
+const { deleteServiceDay } = require("./scraping/deleteServiceDay");
+
 const { evaluateIfDispo, getServiceDispo } = require("./scraping/dispo");
 
 const puppeteer = require("puppeteer-extra");
 
 const { checkDateOk } = require("./scraping/checkDateOk");
+const { log } = require("console");
 
 module.exports.scrape = async function scrape(id, password) {
   //plugin that allows not to be detected
@@ -192,6 +198,23 @@ module.exports.scrape = async function scrape(id, password) {
     else if (dispo === "34:00") {
       service = await getServiceDispo(page);
       arrayServices.push(service);
+      // if not day not worked deleted if changed
+    } else {
+      const date = await deleteServiceDay(page);
+
+      const dataBase = JSON.parse(
+        fs.readFileSync(
+          path.join(__dirname, "..", "data", id + "data.json"),
+          "utf-8"
+        )
+      );
+
+      let arrayFiltered = dataBase.filter((obj) => obj.date !== date);
+
+      fs.writeFileSync(
+        path.join(__dirname, "..", "data", id + "data.json"),
+        JSON.stringify(arrayFiltered)
+      );
     }
 
     // ------------->  Next page  <------------- //
