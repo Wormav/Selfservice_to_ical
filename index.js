@@ -47,6 +47,8 @@ app.get("/calendar/:id/:password", async (req, res) => {
   id = req.params.id;
   password = req.params.password;
 
+  // Server call function
+
   async function callServeur(id) {
     let dateLastScrap = JSON.parse(
       fs.readFileSync("./data/" + id + "lastScrapTime.json", "utf-8")
@@ -65,13 +67,38 @@ app.get("/calendar/:id/:password", async (req, res) => {
     }
   }
 
+  // Create files if they don't exist
+
+  if (!fs.existsSync("./data/" + id + "data.json")) {
+    fs.writeFileSync(
+      "./data/" + id + "data.json",
+      JSON.stringify([
+        {
+          date: "lun. 7 févr. 1994",
+          start: "16:30",
+          end: "16:31",
+          startPlaceIdentifier: "nul",
+          endPlaceIdentifier: "nul",
+          sb: "naissance du createur",
+          message: "3f avec 4 lignes",
+        },
+      ]),
+      function (err) {
+        if (err) throw err;
+        console.log("File create !");
+      }
+    );
+  }
+
+  // Create files if they don't exist and launch the call to the server
+
   if (!fs.existsSync("./data/" + id + "lastScrapTime.json")) {
     fs.writeFileSync(
       "./data/" + id + "lastScrapTime.json",
       JSON.stringify({ date: 0 }),
       function (err) {
         if (err) throw err;
-        console.log("Fichier créé !");
+        console.log("File create !");
       }
     );
     await callServeur(id);
