@@ -57,7 +57,10 @@ const { evaluateIfDispo, getServiceDispo } = require("./scraping/dispo");
 const puppeteer = require("puppeteer-extra");
 
 const { checkDateOk } = require("./scraping/checkDateOk");
-const { log } = require("console");
+
+const {
+  changeHoursAfterMidnight,
+} = require("./scraping/changeHoursAfterMidnight");
 
 module.exports.scrape = async function scrape(id, password) {
   //plugin that allows not to be detected
@@ -103,7 +106,7 @@ module.exports.scrape = async function scrape(id, password) {
 
   await page.waitForTimeout("5000");
 
-  for (i = 0; i < 30; i++) {
+  for (i = 0; i < 40; i++) {
     const dayType = await dayTypeEvaluate(page);
     const dispo = await evaluateIfDispo(page);
     let service;
@@ -131,6 +134,8 @@ module.exports.scrape = async function scrape(id, password) {
       else {
         service = await getService1f(page);
       }
+
+      service = changeHoursAfterMidnight(service);
 
       arrayServices.push(service);
       // ------------->  if 2F  <------------- //
