@@ -11,7 +11,7 @@ function monthInEn(string){
     "sept.": "September ,",
     "oct.": "October ,",
     "nov.": "November ,",
-    "déc" : "December ,",
+    "déc." : "December ,",
   };
 
   const stringReplace = string.replace(

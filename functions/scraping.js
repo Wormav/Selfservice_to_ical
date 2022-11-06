@@ -106,7 +106,7 @@ module.exports.scrape = async function scrape(id, password) {
 
   await page.waitForTimeout("5000");
 
-  for (i = 0; i < 40; i++) {
+  for (i = 0; i < 30; i++) {
     const dayType = await dayTypeEvaluate(page);
     const dispo = await evaluateIfDispo(page);
     let service;
