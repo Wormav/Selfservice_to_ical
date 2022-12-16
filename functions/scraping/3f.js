@@ -39,8 +39,105 @@ async function evaluateif3CoupureEtNavettePerso(page) {
   }
 }
 
+async function evaluateif3fSyndicat(page) {
+  try {
+    const dayType = await page.evaluate(() => {
+      const type = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[0]
+        .innerText;
+      return type;
+    });
+    return dayType;
+  } catch (e) {
+    return "no 3f syndicat";
+  }
+}
+
 // ------------->  scrap 3F  <------------- //
 
+// 3F syndicat
+async function getService3fIfsyndicat1(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+      const start = document.querySelector(
+        ".DutyActivity_StartTime_Cell_Value"
+      ).innerText;
+
+      const startPlaceIdentifier = document.querySelector(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      ).innerText;
+
+      const sb = document.querySelector(
+        ".DutyActivity_Name_Cell_Value"
+      ).innerText;
+      const endPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[1].innerText;
+
+      const end = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[1].innerText;
+
+      const message = "3f syndicat";
+
+      return {
+        date,
+        start,
+        end,
+        startPlaceIdentifier,
+        endPlaceIdentifier,
+        sb,
+        message,
+      };
+    });
+    return result;
+  } catch (e) {
+    return "bug 3F syndicat Service 1";
+  }
+}
+
+async function getService3fIfsyndicat2(page) {
+  try {
+    const result = await page.evaluate(() => {
+      const date = document.querySelector(
+        ".DateNavigationBarDateLabel"
+      ).innerText;
+
+      const startPlaceIdentifier = document.querySelectorAll(
+        ".DutyActivity_StartPlaceIdentifier_Cell_Value"
+      )[2].innerText;
+
+      const start = document.querySelectorAll(
+        ".DutyActivity_StartTime_Cell_Value"
+      )[2].innerText;
+      const sb = document.querySelectorAll(".DutyActivity_Name_Cell_Value")[2]
+        .innerText;
+      const endPlaceIdentifier = "DEP";
+
+      const end = document.querySelectorAll(
+        ".DutyActivity_EndTime_Cell_Value"
+      )[2].innerText;
+
+      const message = "3f avec syndicat Service 2";
+
+      return {
+        date,
+        start,
+        end,
+        startPlaceIdentifier,
+        endPlaceIdentifier,
+        sb,
+
+        message,
+      };
+    });
+    return result;
+  } catch (e) {
+    return "bug 3F";
+  }
+}
 // 3F 4 lignes
 async function getService3fIf4lignesService1(page) {
   try {
@@ -589,6 +686,7 @@ module.exports = {
   evaluateif3f4lignes,
   evaluateif3f4lignesAndDeplacement,
   evaluateif3CoupureEtNavettePerso,
+  evaluateif3fSyndicat,
   getService3fIf4lignesService1,
   getService3fIf4lignesService2,
   getService3fIf4lignesService3,
@@ -599,4 +697,6 @@ module.exports = {
   getService3fIfCoupureEtNavettePersoService2,
   getService3fIfCoupureEtNavettePersoService3,
   getService3fIfCoupureEtNavettePersoService4,
+  getService3fIfsyndicat1,
+  getService3fIfsyndicat2,
 };
